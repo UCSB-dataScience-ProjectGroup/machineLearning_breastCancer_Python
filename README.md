@@ -3,47 +3,43 @@
 **Contributor**:
 + Raul Eulogio
 
-I created this repo as a way to get better acquainted with **Python** as a language and as a tool for data analysis. 
+I created this repo as a way to get better acquainted with **Python** as a language and as a tool for data analysis. But it eventually became in exercise in utilizing various programming languages for machine learning applications.
 
 I employed four **Machine Learning** techniques:
 + **Kth Nearest Neighbor**
-+ **Decision Tree**
 + **Random Forest**
-+ **Neural Networks**
++ **Neural Networks**:  
 
-If you would like to see a walk through of the analysis the **Jupyter Notebook** includes running code as well as explanations for algorithms and processes. 
+If you would like to see a walk through of the analysis on [inertia7](https://www.inertia7.com/projects/3) includes running code as well as explanations for exploratory analysis. This [project](https://www.inertia7.com/projects/95) contains an overview of *random forest*, explanations for other algorithms in the works.
 
-For the script I employed a technique I learned from [Nathan Fritter](https://github.com/Njfritter) (thanks homie). It is outlined as such:
+The repository includes the *scripts* folder which contains scripts for these programming languages (in order of most detailed):
++ *Python*
++ *R*
++ *PySpark*
 
-The **.py** script is broken into 5 sections (done by creating a function for each section) in the following order:
+This repo is primarily concerned with the *python* iteration.
+
+The multiple *python* script is broken into 5 sections (done by creating a scipt for each section) in the following order:
 + **Exploratory Analysis**
-+ **Visual Exploratory Analysis**
 + **Kth Nearest Neighbors**
-+ **Decision Tree**
 + **Random Forest**
 + **Neural Networks**
++ **Comparing Models**
+
+**NOTE**: The files `data_extraction.py`, `helper_functions.py`, and `produce_model_metrics.py` are used to abstract functions to make code easier to read. These files do a lot of the work so if you are interested in how the scripts work definitely check them out.
 
 ## Running .py Script
+A `virtualenv` is needed where you will download the necessary packages from the `requirements.txt` using:
 
-To run the script successfully, within the terminal you would employ this technique (Outlined starting at line 618):
+	pip3 install -r requirements.txt
 
-I have 6 functions which are called up using these initials:
-+ **Exploratory Analysis** - `EA`
-+ **Visual Exploratory Analysis** - `VEA`
-+ **Kth Nearest Neighbors** - `KNN`
-+ **Decision Tree** - `DT`
-+ **Random Forest** - `RF`
-+ **Neural Networks** - `NN`
+Once this is done you can run the scripts using the usual terminal command:
 
-So for example you wanted to run **Exploratory Analysis** section you type this into the terminal:
-
-	$ python breastCancerWisconsinDataSet_MachineLearning.py EA
-
-You would do the same for all other functions with the respective initial!
+	$ python3 exploratory_analysis.py
 
 **NOTE**: You can also run it by making script executable as such:
 
-	$ chmod +x breastCancerWisconsinDataSet_MachineLearning.py
+	$ chmod +x exploratory_analysis.py
 
 
 **Remember**: You must have a *shebang* for this to run i.e. this must be at the very beginning of your script:
@@ -52,35 +48,32 @@ You would do the same for all other functions with the respective initial!
 
 then you would simply just run it (I'll use **Random Forest** as an example)
 
-	$ ./breastCancerWisconsinDataSet_MachineLearning.py RF
+	$ ./random_forest.py
 
 ## Conclusions
-Once I employed all these methods I deduced that **Neural Networks** performed the best in terms of all diagnostics. But when choosing the best model since **Neural Networks** are *black box* models, we don't gain a lot of insight into our data. So in conclusion **Random Forest** was the best model in terms of performance and insight to our data. 
+Once I employed all these methods, we were able to utilize various machine learning metrics. Each model provided valuable insight. *Kth Nearest Neighbor* helped create a baseline model to compare the more complex models. *Random forest* helps us see what variables were important in the bootstrapped decision trees. And *Neural Networks* provided minimal false negatives which results in false negatives. In this context it can mean death.  
 
 ### Diagnostics for Data Set
 
-| Model/Algorithm 	| Test Error Rate 	| False Negative for Test Set 	| Area under the Curve for ROC | 
-|-----------------|-----------------|-------------------------------|----------------------------|
-| Kth Nearest Neighbor 	| 3.509% |	2 |	0.9627 | 
-| Decision Trees 	| 5.263% 	| 4 |	0.9482 | 
-| Random Forest 	| 3.509% 	| 3 	| 0.9673 | 
-| Neural Networks 	| 1.754% 	| 1 	| 0.981 | 
+
+| Model/Algorithm      | Test Error Rate | False Negative for Test Set | Area under the Curve for ROC | Cross Validation Score        | Hyperparameter Optimization |
+|----------------------|-----------------|-----------------------------|------------------------------|-------------------------------|-----------------------|
+| Kth Nearest Neighbor | 0.07  | 5 | 0.980 | Accuracy:  0.925 (+/-  0.025) | Optimal *K* is 3 |
+| Random Forest        | 0.035 | 3 | 0.996 | Accuracy:  0.963 (+/-  0.013) | {'max_features': 'log2', 'max_depth': 3, 'bootstrap': True, 'criterion': 'gini'}	|
+| Neural Networks      | 0.035 | 1 | 0.982 | Accuracy:  0.967 (+/-  0.011) | {'hidden_layer_sizes': 12, 'activation': 'tanh', 'learning_rate_init': 0.05} |
+
+
 
 #### ROC Curves for Data Set
-**NOTE**: Created on the **Jupyter Notebook** iteration. Not found in **Python** script. 
-<img src="images/rocNotebook.png" style="width: 100px;"/>
+<img src="https://raw.githubusercontent.com/raviolli77/machineLearning_breastCancer_Python/master/reports/images/roc_all.png" style="width: 100px;"/>
 
 #### ROC Curves zoomed in
-<img src="images/rocClose.png" style="width: 100px;"/>
+<img src="https://raw.githubusercontent.com/raviolli77/machineLearning_breastCancer_Python/master/reports/images/roc_all_zoom.png" style="width: 100px;"/>
 
-The ROC Curves are more telling of **Random Forest** being a better model for predicting. 
+The ROC Curves are more telling of **Random Forest** being a better model for predicting.
 
 Any feedback is welcomed!
 
 Things to do:
-+ Change **Jupter Notebook** to reflect changes made to **Neural Networks** since I got better predictions 
-+ Change **ROC Curves** on this **README** since **Neural Networks** performed better than last iteration
-+ Change conclusions since reading documentation of real life application showed that both **Neural Networks** and **Random Forest** are useful. Its not just about picking one model. Found here: https://research.googleblog.com/2017/03/assisting-pathologists-in-detecting.html
-+ Too tired to do right now 
-
-Still a work in progress, but decided to leave both iterations to show different ways my work flow happens and emphasize that iterations make a project go from **okay** to **lit af** 
++ Create **Jupter Notebook** for *KNN* and *NN* (1/25/2018)
++ Unit test scripts 
